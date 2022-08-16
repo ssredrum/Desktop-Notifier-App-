@@ -1,0 +1,11 @@
+from plyer import notification # from library import notification
+        
+title = "Hello!" # tittle = hello
+
+message = "This is message!" # message = this is message
+        
+notification.notify(title= title, 
+                    message= message, 
+                    app_icon = None, 
+                    timeout= 10, 
+                    toast=False) # standards

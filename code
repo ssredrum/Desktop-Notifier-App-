@@ -1,11 +1,81 @@
-from plyer import notification # from library import notification
-        
-title = "Hello!" # tittle = hello
+from tkinter import *
 
-message = "This is message!" # message = this is message
-        
-notification.notify(title= title, 
-                    message= message, 
-                    app_icon = None, 
-                    timeout= 10, 
-                    toast=False) # standards
+from plyer import notification
+
+import tkinter as tk
+
+import time
+
+import messagebox
+
+
+
+win = Tk()
+
+canvas1 = tk.Canvas(win, width=400, height=330, bg='white')
+canvas1.pack()
+
+Label1 = tk.Label(win, text='desktop notifier', font=('helvetica bold', 18))
+canvas1.create_window(200, 20, window=Label1)
+
+win.resizable(False, False)
+
+win.config(bg='white')
+
+sec = StringVar()
+Entry(win, textvariable=sec, width=2, font='Helvetica 14').place(x=220, y=120)
+sec.set('00')
+min = StringVar()
+Entry(win, textvariable=min, width=2, font='Helvetica 14').place(x=180, y=120)
+min.set('00')
+hrs = StringVar()
+Entry(win, textvariable=hrs, width=2, font='Helvetica 14').place(x=142, y=120)
+hrs.set('00')
+
+
+def countdowntimer():
+    try:
+
+        user_input = int(hrs.get()) * 3600 + int(min.get()) * 60 + int(sec.get())
+    except:
+        messagebox.showwarning('', 'Error!')
+    while user_input > -1:
+
+
+        mins, secs = divmod(user_input, 60)
+
+
+        hours = 0
+        if mins > 60:
+            hours, mins = divmod(mins, 60)
+
+
+        hrs.set("{0:2d}".format(hours))
+        min.set("{0:2d}".format(mins))
+        sec.set("{0:2d}".format(secs))
+
+
+        win.update()
+        time.sleep(1)
+
+
+        if (user_input == 0):
+
+            notification.notify(title="Hello !",
+                                message="This is messge!",
+                                timeout=10)
+
+
+        user_input -= 1
+
+
+Label2 = tk.Label(win, font=('Helvetica bold', 15), text='Set the Timer', bg
+        ='pink').place(x=130, y=70)
+
+
+button1 = tk.Button(text='Start', command=countdowntimer, bg='brown', fg='white',
+                            font=('helvetica', 9, 'bold'))
+canvas1.create_window(200, 180, window=button1)
+
+
+win.mainloop()
